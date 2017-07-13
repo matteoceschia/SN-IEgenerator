@@ -95,9 +95,9 @@ calo_type: 0 is the main-wall, 1 the x-wall and 2 the gamma veto
 calo_side: 0 is left of foil, i.e. negative x-coordinate;
            1 is right with positive x-coordinates
 
-calo_wall: -1 for the main-wall = has no meaning
-           0 and 1 for the x-wall and gamma veto for
-           0 - negative y or z coordinates respectively
+calo_wall: -1 for the main-wall = has no meaning; 
+           0 and 1 for the x-wall and gamma veto with: 
+           0 - negative y or z coordinates respectively; 
            1 - for the positive y or z coordinates
 
 pointx,y,z: are the impact coordinates on the calorimeter block face
@@ -106,10 +106,10 @@ pointx,y,z: are the impact coordinates on the calorimeter block face
 the outgoing object, line or helix, is recorded at its start
 with direction vector coordinates
 
-dirx,y,z: line slopes in xy and xz planes with dirx=1 by construction
+dirx,y,z: line slopes in xy and xz planes with dirx=1 by construction; 
           helix momentum vector coordinates in x=0 plane
 
-charge: 0 for line, 1 or -1 for helix
+charge: 0 for line; 1 or -1 for helix
 
 ---
 tracker cell data is collected in double and int numbers
