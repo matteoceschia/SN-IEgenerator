@@ -85,15 +85,21 @@ The calo entries are all integers, tagging each single calorimeter detector
 similar to a geom id in Falaise.
 
 calo_id: counter
+
 calo_row: counter of block in wall
+
 calo_column: see calo_row
+
 calo_type: 0 is the main-wall, 1 the x-wall and 2 the gamma veto
+
 calo_side: 0 is left of foil, i.e. negative x-coordinate;
            1 is right with positive x-coordinates
+
 calo_wall: -1 for the main-wall = has no meaning
            0 and 1 for the x-wall and gamma veto for
            0 - negative y or z coordinates respectively
            1 - for the positive y or z coordinates
+
 pointx,y,z: are the impact coordinates on the calorimeter block face
 
 ---
@@ -102,6 +108,7 @@ with direction vector coordinates
 
 dirx,y,z: line slopes in xy and xz planes with dirx=1 by construction
           helix momentum vector coordinates in x=0 plane
+
 charge: 0 for line, 1 or -1 for helix
 
 ---
@@ -110,11 +117,15 @@ tracker cell data is collected in double and int numbers
 wirex,y,z: the anode wire coordinate of a triggered cell with
            z coordinate determined from shortest geometric
            distance to gometry object passing by.
+
 radius: the shortest geometric distance of the geometry object
         to the wire anode coordinate as measured in 3D.
 
 grid_id: counter
+
 grid_layer: 0-8 the tracker layers
+
 grid_column: 113 are in the tracker
+
 grid_side: 0 left tracker, 1 right tracker
 
