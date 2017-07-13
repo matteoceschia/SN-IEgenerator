@@ -3,8 +3,8 @@ import random
 import numpy as np
 import ROOT as root
 import multilines as ML
-from pysnemo.utility import geometrycheck as gcheck
-from pysnemo.utility import euclid
+from utility import geometrycheck as gcheck
+from utility import euclid
 
 root.gROOT.ProcessLine(
 "struct DataStruct{\

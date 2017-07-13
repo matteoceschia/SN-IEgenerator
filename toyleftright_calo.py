@@ -1,6 +1,6 @@
 import ROOT as root
 import multilines as ML
-from pysnemo.utility import geometrycheck as gcheck
+from utility import geometrycheck as gcheck
 
 root.gROOT.ProcessLine(
 "struct DataStruct{\

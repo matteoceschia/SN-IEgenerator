@@ -1,8 +1,8 @@
 from math import sqrt, tan, pi, atan
 import numpy as np
 import random
-from pysnemo.utility import euclid
-from pysnemo.utility import helix as HX
+from utility import euclid
+from utility import helix as HX
 
 
 class demonstratorgrid(object):

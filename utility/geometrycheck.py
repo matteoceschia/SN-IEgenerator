@@ -1,5 +1,5 @@
-import pysnemo.utility.euclid as EU
-from pysnemo.utility.interval import Interval
+import utility.euclid as EU
+from utility.interval import Interval
 
 class demonstratorcalo(object):
     '''

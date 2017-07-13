@@ -3,7 +3,7 @@ import numpy as np
 import ROOT as root
 import multilines as ML
 from scipy.ndimage import label
-from pysnemo.utility import geometrycheck as gcheck
+from utility import geometrycheck as gcheck
 
 root.gROOT.ProcessLine(
 "struct DataStruct{\
