@@ -31,7 +31,7 @@ root.gROOT.ProcessLine(
    vector<int>*    calo_row;\
 };");
 
-Nsims = 1000 # Number of simulated lines
+Nsims = 10 # Number of simulated lines
 
 # Set up ROOT data structures for file output and storage
 file = root.TFile("/tmp/leftright_calo.tsim","recreate")
