@@ -44,6 +44,15 @@ to be set to some default value, like calo energy and time. There are no
 dummy entries for all these in the ROOT output file. Again, the simpler
 the better for the purpose of reconstruction validation on these simple geometric events.
 
+FLTranslate is a small application to translate the simulated toy data sets to
+Falaise BRIO files which then contain filled 'Calibrated Data' data banks
+as required for reconstruction modules. The application needs to be built
+with cmake using the Bayeux and Falaise libraries, similar to building
+FLSimulate. Once built, try ./build/fltranslate --help to see the minimal
+command line options. The resulting BRIO files should then be able to serve as 
+input files for reconstruction modules. This currently hasn't been tested but
+the translation itself appears to work.
+
 
 Installed geometry event types
 ------------------------------
@@ -129,3 +138,11 @@ grid_column: 113 are in the tracker
 
 grid_side: 0 left tracker, 1 right tracker
 
+
+BRIO file from fltranslate:
+---------------------------
+Contains only a filled 'CD' data bank of calibrated hit objects
+for reconstruction modules from translating the toy simulation
+results. There are calibrated tracker hits in collections as well
+as corresponding calibrated calorimeter hits, each with their 
+required data, hit id's and geometry id's.
