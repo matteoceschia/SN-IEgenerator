@@ -1,0 +1,3 @@
+/home/epp/phsdaq/Code/Sandbox/github/supernemo/SN-IEgenerator/FLTranslate/build/CMakeFiles/edit_cache.dir
+/home/epp/phsdaq/Code/Sandbox/github/supernemo/SN-IEgenerator/FLTranslate/build/CMakeFiles/rebuild_cache.dir
+/home/epp/phsdaq/Code/Sandbox/github/supernemo/SN-IEgenerator/FLTranslate/build/CMakeFiles/fltranslate.exe.dir

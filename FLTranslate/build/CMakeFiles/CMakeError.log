@@ -1,0 +1,51 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/epp/phsdaq/Code/Sandbox/github/supernemo/SN-IEgenerator/FLTranslate/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_2771f/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_2771f.dir/build.make CMakeFiles/cmTC_2771f.dir/build
+gmake[1]: Entering directory `/home/epp/phsdaq/Code/Sandbox/github/supernemo/SN-IEgenerator/FLTranslate/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_2771f.dir/CheckSymbolExists.c.o
+/usr/bin/gcc-4.9    -o CMakeFiles/cmTC_2771f.dir/CheckSymbolExists.c.o   -c /home/epp/phsdaq/Code/Sandbox/github/supernemo/SN-IEgenerator/FLTranslate/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_2771f
+/storage/epp2/epp_software/SuperNEMO/Cellar/cmake/3.8.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2771f.dir/link.txt --verbose=1
+/usr/bin/gcc-4.9      -rdynamic CMakeFiles/cmTC_2771f.dir/CheckSymbolExists.c.o  -o cmTC_2771f 
+CMakeFiles/cmTC_2771f.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [cmTC_2771f] Error 1
+gmake[1]: Leaving directory `/home/epp/phsdaq/Code/Sandbox/github/supernemo/SN-IEgenerator/FLTranslate/build/CMakeFiles/CMakeTmp'
+gmake: *** [cmTC_2771f/fast] Error 2
+
+File /home/epp/phsdaq/Code/Sandbox/github/supernemo/SN-IEgenerator/FLTranslate/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/epp/phsdaq/Code/Sandbox/github/supernemo/SN-IEgenerator/FLTranslate/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_49195/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_49195.dir/build.make CMakeFiles/cmTC_49195.dir/build
+gmake[1]: Entering directory `/home/epp/phsdaq/Code/Sandbox/github/supernemo/SN-IEgenerator/FLTranslate/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_49195.dir/CheckFunctionExists.c.o
+/usr/bin/gcc-4.9   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_49195.dir/CheckFunctionExists.c.o   -c /storage/epp2/epp_software/SuperNEMO/Cellar/cmake/3.8.2/share/cmake/Modules/CheckFunctionExists.c
+Linking C executable cmTC_49195
+/storage/epp2/epp_software/SuperNEMO/Cellar/cmake/3.8.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_49195.dir/link.txt --verbose=1
+/usr/bin/gcc-4.9  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_49195.dir/CheckFunctionExists.c.o  -o cmTC_49195 -lpthreads 
+/usr/lib64/gcc/x86_64-suse-linux/4.9/../../../../x86_64-suse-linux/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [cmTC_49195] Error 1
+gmake[1]: Leaving directory `/home/epp/phsdaq/Code/Sandbox/github/supernemo/SN-IEgenerator/FLTranslate/build/CMakeFiles/CMakeTmp'
+gmake: *** [cmTC_49195/fast] Error 2
+
+
