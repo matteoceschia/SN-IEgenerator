@@ -332,7 +332,7 @@ namespace FLTranslate {
 	  side = (unsigned int)grid_side->at(counter);
 	  layer = (unsigned int)grid_layer->at(counter);
 	  column = (unsigned int)grid_column->at(counter);
-	  const geomtools::geom_id& gid = geomtools::geom_id(type, side, layer, column); // constructor
+	  const geomtools::geom_id& gid = geomtools::geom_id(type, 0, side, layer, column); // constructor
 	  the_calibrated_tracker_hit.set_geom_id(gid); // from base_hit class
 	  
 	  rad = radius->at(counter);
@@ -369,17 +369,17 @@ namespace FLTranslate {
 	  
 	  if (tp==0) {
 	    type = 1302; // calorimter
-	    const geomtools::geom_id& gid = geomtools::geom_id(type, side, layer, row); // constructor
+	    const geomtools::geom_id& gid = geomtools::geom_id(type, 0, side, layer, row); // constructor
 	    the_calibrated_calorimeter_hit.set_geom_id(gid); // from base_hit class
 	  }
 	  else if (tp==1) {
 	    type = 1232; // x-wall
-	    const geomtools::geom_id& gid = geomtools::geom_id(type, side, wall, row); // constructor
+	    const geomtools::geom_id& gid = geomtools::geom_id(type, 0, side, wall, row); // constructor
 	    the_calibrated_calorimeter_hit.set_geom_id(gid); // from base_hit class
 	  }
 	  else if (tp==2) { 
 	    type = 1252; // gveto
-	    const geomtools::geom_id& gid = geomtools::geom_id(type, side, wall, layer); // constructor
+	    const geomtools::geom_id& gid = geomtools::geom_id(type, 0, side, wall, layer); // constructor
 	    the_calibrated_calorimeter_hit.set_geom_id(gid); // from base_hit class
 	  }
 
