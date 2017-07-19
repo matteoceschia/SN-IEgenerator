@@ -369,17 +369,17 @@ namespace FLTranslate {
 	  
 	  if (tp==0) {
 	    type = 1302; // calorimter
-	    const geomtools::geom_id& gid = geomtools::geom_id(type, 0, side, layer, row); // constructor
+	    const geomtools::geom_id& gid = geomtools::geom_id(type, 0, side, layer, row, geomtools::geom_id::ANY_ADDRESS); // constructor
 	    the_calibrated_calorimeter_hit.set_geom_id(gid); // from base_hit class
 	  }
 	  else if (tp==1) {
 	    type = 1232; // x-wall
-	    const geomtools::geom_id& gid = geomtools::geom_id(type, 0, side, wall, row); // constructor
+	    const geomtools::geom_id& gid = geomtools::geom_id(type, 0, side, wall, row, geomtools::geom_id::ANY_ADDRESS); // constructor
 	    the_calibrated_calorimeter_hit.set_geom_id(gid); // from base_hit class
 	  }
 	  else if (tp==2) { 
 	    type = 1252; // gveto
-	    const geomtools::geom_id& gid = geomtools::geom_id(type, 0, side, wall, layer); // constructor
+	    const geomtools::geom_id& gid = geomtools::geom_id(type, 0, side, wall, layer, geomtools::geom_id::ANY_ADDRESS); // constructor
 	    the_calibrated_calorimeter_hit.set_geom_id(gid); // from base_hit class
 	  }
 
