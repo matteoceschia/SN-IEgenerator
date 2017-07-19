@@ -55,7 +55,7 @@ namespace FLSimulate {
     params.variantSubsystemParams.config_filename = "";
 
     // Service support:
-    params.servicesSubsystemConfigUrn = "";
+    params.servicesSubsystemConfigUrn = "urn:snemo:demonstrator:geometry:4.0";
     params.servicesSubsystemConfig = "";
 
     // I/O control:
