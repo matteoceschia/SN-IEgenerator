@@ -9,17 +9,24 @@ project(fltranslate)
 # dependencies such as Bayeux, ROOT and Boost.
 find_package(Falaise REQUIRED)
 
+# (Re)Find ROOT, need TreePlayer lib
+find_package(ROOT REQUIRED TreePlayer)
+
 # Build an executable from our sources
-add_executable(fltranslate.exe 
-  fltranslate.cc 
+add_executable(fltranslate.exe
+  fltranslate.cc
   FLSimulateCommandLine.h
   FLSimulateErrors.h
   FLSimulateArgs.h
   FLSimulateArgs.cc
-  getopt_pp.h 
+  getopt_pp.h
   getopt_pp.cpp)
 
 # Link it to the FalaiseModule library
 # This ensures the correct compiler flags, include paths
 # and linker flags are applied to our dynamic library.
-target_link_libraries(fltranslate.exe PUBLIC Falaise::Falaise Bayeux::Bayeux_mctools_geant4)
+target_link_libraries(fltranslate.exe PUBLIC
+  Falaise::Falaise
+  Bayeux::Bayeux_mctools_geant4
+  ${ROOT_TreePlayer_LIBRARY}
+  )
