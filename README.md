@@ -86,6 +86,52 @@ Setting the Python path to the package, for instance as:
 setenv PYTHONPATH ${PYTHONPATH}:${HOME}/Code/Sandbox/github/supernemo/SN-IEgenerator
 
 
+Examples:
+---------
+(A) In the SN-IEgenerator folder containing the python scripts toy<something>.py
+launch from the command prompt:
+
+python toyillumination.py
+
+and if the prerequisites are all ready, i.e. numpy/scipy and pyROOT working,
+then the script should just run and finish silently.
+
+By default the scripts produce 1000 toy simulation events, stored in a ROOT
+file at /tmp/ with an ending of .tsim. The above script for instance gives you
+a file /tmp/illumination.tsim
+
+The reason for simply hard-coding the number of events and the output file 
+location is that these scripts are meant for one-off operations.
+
+Once you got a file full of idealized toy events then you use it for testing
+purposes, nothing much else. No need to re-produce any unless you need more
+in total. The second reason is that these are simple python scripts and can
+be edited very easily in case the number of required events changes.
+
+As one-off, persistent toy event files, one might wish to move them into a 
+dedicated ToyData folder. The next step then is to translate them to a viable
+BRIO file for Falaise use.
+
+(B) Assuming you built the fltranslate executable successfully (and put your 
+toy data in a folder called ToyData/), use:
+
+./FLTranslate/build/fltranslate.exe --help
+
+to see the 4 command line options or simply launch
+
+./FLTranslate/build/fltranslate.exe -i ToyData/illumination.tsim
+
+(the -i option is required as it signals the input file to translate)
+
+then the excutable will translate all events it can find and put the 
+BRIO file in /tmp/output.brio. Specifying a more convenient output
+file name and location could be done with the '-o' command 
+line option.
+
+Finally, it is recommended to try visualizing a few of the toy events using
+flvisualize on the newly created BRIO file.
+
+
 ROOT output file description
 ----------------------------
 TTree with 25 branches, name "hit_tree", default storage in /tmp/filename.tsim
@@ -146,3 +192,6 @@ for reconstruction modules from translating the toy simulation
 results. There are calibrated tracker hits in collections as well
 as corresponding calibrated calorimeter hits, each with their 
 required data, hit id's and geometry id's.
+The consistency with flvisualize has been tested and is advised to
+be used for clarity on the toy data, what it is and how it looks like.
+
