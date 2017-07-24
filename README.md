@@ -80,10 +80,19 @@ Requirements
 
 Init
 ----
-No installation as such but informing the system of pySNemo existance is required.
-Setting the Python path to the package, for instance as:
+No installation as such as long as the requirements are working. Simple test: start python on the command prompt.
 
-setenv PYTHONPATH ${PYTHONPATH}:${HOME}/Code/Sandbox/github/supernemo/SN-IEgenerator
+'>python'
+
+then launch import commands:
+
+'import numpy'
+
+'import scipy'
+
+'import ROOT'
+
+If all these reply without an error (just another command prompt) then all should be fine for the scripts to run.
 
 
 Examples:
