@@ -164,7 +164,12 @@ for i in range(Nsims):
 #    dataStruct.pointz.push_back(dummy.p.z)
 
     counter = 0
+    type = caloinfo[0][1]
     for w,r,mi in zip(cells,radii,info):
+        if type == 1 and abs(w[1]) > abs(calo_hit_point.y): 
+            continue # dismiss geiger hits outside xwall
+        if type == 2 and abs(w[2]) > abs(calo_hit_point.z): 
+            continue # dismiss geiger hits outside gveto
         dataStruct.radius.push_back(r)
         dataStruct.wirex.push_back(w[0])
         dataStruct.wirey.push_back(w[1])
@@ -177,7 +182,6 @@ for i in range(Nsims):
         dataStruct.gridcolumn.push_back(col)
         dataStruct.gridside.push_back(side) # not covered yet 
         counter += 1 # count up all hits for entire event
-    type = caloinfo[0][1]
     side = caloinfo[0][3]
     col  = caloinfo[0][4]
     row  = caloinfo[0][5]

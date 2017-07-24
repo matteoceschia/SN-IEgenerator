@@ -161,7 +161,13 @@ for i in range(Nsims):
         #dataStruct.pointz.push_back(line.p.z)
         dataStruct.charge.push_back(0)
 
+        ci, point = cluster2[k]
+        type = ci[0][1]
         for w,r,mi in zip(cells,radii,info):
+            if type == 1 and abs(w[1]) > abs(calo_hit_point.y): 
+                continue # dismiss geiger hits outside xwall
+            if type == 2 and abs(w[2]) > abs(calo_hit_point.z): 
+                continue # dismiss geiger hits outside gveto
             dataStruct.radius.push_back(r)
             dataStruct.wirex.push_back(w[0])
             dataStruct.wirey.push_back(w[1])

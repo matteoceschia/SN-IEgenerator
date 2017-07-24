@@ -382,7 +382,7 @@ falaise::exit_code do_fltranslate(int argc, char* argv[]) {
         side = (unsigned int)calo_side->at(counter);
         wall = (unsigned int)calo_wall->at(counter);  // xwall: 0,1; gveto: 0,1
         layer = (unsigned int)calo_column->at(
-            counter);  // main calo: 0-19; gveto: 0-15
+            counter);  // main calo: 0-19; gveto: 0-15; xwall: 0-1
         row =
             (unsigned int)calo_row->at(counter);  // main calo: 0-12; xwall 0-15
 
@@ -396,15 +396,13 @@ falaise::exit_code do_fltranslate(int argc, char* argv[]) {
         } else if (tp == 1) {
           type = 1232;  // x-wall
           const geomtools::geom_id& gid = geomtools::geom_id(
-              type, 0, side, wall, row,
-              geomtools::geom_id::ANY_ADDRESS);  // constructor
+	     type, 0, side, wall, layer, row);  // constructor
           the_calibrated_calorimeter_hit.set_geom_id(
               gid);  // from base_hit class
         } else if (tp == 2) {
           type = 1252;  // gveto
           const geomtools::geom_id& gid = geomtools::geom_id(
-              type, 0, side, wall, layer,
-              geomtools::geom_id::ANY_ADDRESS);  // constructor
+              type, 0, side, wall, layer);  // constructor
           the_calibrated_calorimeter_hit.set_geom_id(
               gid);  // from base_hit class
         }

@@ -246,6 +246,10 @@ for i in range(Nsims):
 
     counter = 0
     for w,r,mi in zip(ncells, nradii, ninfo):
+        if type == 1 and abs(w[1]) > abs(calo_hit_point.y): 
+            continue # dismiss geiger hits outside xwall
+        if type == 2 and abs(w[2]) > abs(calo_hit_point.z): 
+            continue # dismiss geiger hits outside gveto
         dataStruct.radius.push_back(r)
         dataStruct.wirex.push_back(w[0])
         dataStruct.wirey.push_back(w[1])
