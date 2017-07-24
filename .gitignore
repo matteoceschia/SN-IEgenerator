@@ -1,5 +1,6 @@
 # my directories
 workdir/
+build
 
 # C extensions
 *.so
