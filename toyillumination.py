@@ -175,12 +175,12 @@ for i in range(Nsims):
         dataStruct.wirey.push_back(w[1])
         dataStruct.wirez.push_back(w[2])
         dataStruct.gridid.push_back(counter)
-        side = mi[0] # wire side
-        row = mi[1] # wire column
-        col = mi[2] # wire layer
-        dataStruct.gridlayer.push_back(row)
-        dataStruct.gridcolumn.push_back(col)
-        dataStruct.gridside.push_back(side) # not covered yet 
+        gside = mi[0] # wire side
+        grow = mi[1] # wire column
+        gcol = mi[2] # wire layer
+        dataStruct.gridlayer.push_back(grow)
+        dataStruct.gridcolumn.push_back(gcol)
+        dataStruct.gridside.push_back(gside) # not covered yet 
         counter += 1 # count up all hits for entire event
     side = caloinfo[0][3]
     col  = caloinfo[0][4]

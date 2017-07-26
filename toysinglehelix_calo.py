@@ -212,9 +212,9 @@ for i in range(Nsims):
         if ci[1]==0 and ci[3]==lrtracker: # main wall correct side
             if main_wall_test(ci, ninfo, ncells):
                 type = ci[1]
-                side = ci[3]
-                col  = ci[4]
-                row  = ci[5]
+                cside = ci[3]
+                ccol  = ci[4]
+                crow  = ci[5]
                 wall = ci[6]
                 #print 'picked: ',ci
                 calo_hit_point = dcalo.get_point(idx) # back as tuple here
@@ -225,10 +225,10 @@ for i in range(Nsims):
             continue # loose that helix
 
     dataStruct.caloid.push_back(0)
-    dataStruct.calorow.push_back(row)
-    dataStruct.calocolumn.push_back(col)
+    dataStruct.calorow.push_back(crow)
+    dataStruct.calocolumn.push_back(ccol)
     dataStruct.calotype.push_back(type)
-    dataStruct.caloside.push_back(side)
+    dataStruct.caloside.push_back(cside)
     dataStruct.calowall.push_back(wall)
 
     # truth values for structure
