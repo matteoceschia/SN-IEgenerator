@@ -158,7 +158,7 @@ wgr = ML.demonstratorgrid()
 tgen = ML.helix_generator()
 dcalo = gcheck.demonstratorcalo()
 yinterc = 0.0
-
+nonhit = 0
 for i in range(Nsims):
     lrtracker = random.randint(0,1) # pick a side randomly
     struc = tgen.single_random_momentum_with_z(yinterc,lrtracker) # x=0 fixed for this generator
@@ -208,6 +208,7 @@ for i in range(Nsims):
     dataStruct.calocolumn.clear()
 
     # save the geometry truth data
+    write = True
     for idx, ci in enumerate(caloinfo): # multiple calo hits with helix
         if ci[1]==0 and ci[3]==lrtracker: # main wall correct side
             if main_wall_test(ci, ninfo, ncells):
@@ -220,51 +221,58 @@ for i in range(Nsims):
                 calo_hit_point = dcalo.get_point(idx) # back as tuple here
                 #print 'at impact point: ',calo_hit_point
             else:
+                write = False
                 continue # loose that helix
         else:
+            write = False
             continue # loose that helix
 
-    dataStruct.caloid.push_back(0)
-    dataStruct.calorow.push_back(crow)
-    dataStruct.calocolumn.push_back(ccol)
-    dataStruct.calotype.push_back(type)
-    dataStruct.caloside.push_back(cside)
-    dataStruct.calowall.push_back(wall)
+        if write:
+            dataStruct.caloid.push_back(0)
+            dataStruct.calorow.push_back(crow)
+            dataStruct.calocolumn.push_back(ccol)
+            dataStruct.calotype.push_back(type)
+            dataStruct.caloside.push_back(cside)
+            dataStruct.calowall.push_back(wall)
 
-    # truth values for structure
-    # save a helix as parameter set
-    refp = struc.referencePoint # triplet
-    mom  = struc.momentum       # triplet, z=0 by default
-    charge = int(struc.charge)       # number
-    dataStruct.dirx.push_back(mom[0]) # momenta in here
-    dataStruct.diry.push_back(mom[1])
-    dataStruct.dirz.push_back(mom[2])
-    dataStruct.charge.push_back(charge)
-    dataStruct.pointx.push_back(calo_hit_point[0]) # hit point on calo
-    dataStruct.pointy.push_back(calo_hit_point[1])
-    dataStruct.pointz.push_back(calo_hit_point[2])
-
+            # truth values for structure
+            # save a helix as parameter set
+            refp = struc.referencePoint # triplet
+            mom  = struc.momentum       # triplet, z=0 by default
+            charge = int(struc.charge)       # number
+            dataStruct.dirx.push_back(mom[0]) # momenta in here
+            dataStruct.diry.push_back(mom[1])
+            dataStruct.dirz.push_back(mom[2])
+            dataStruct.charge.push_back(charge)
+            dataStruct.pointx.push_back(calo_hit_point[0]) # hit point on calo
+            dataStruct.pointy.push_back(calo_hit_point[1])
+            dataStruct.pointz.push_back(calo_hit_point[2])
+            
     counter = 0
-    for w,r,mi in zip(ncells, nradii, ninfo):
-        if type == 1 and abs(w[1]) > abs(calo_hit_point.y): 
-            continue # dismiss geiger hits outside xwall
-        if type == 2 and abs(w[2]) > abs(calo_hit_point.z): 
-            continue # dismiss geiger hits outside gveto
-        dataStruct.radius.push_back(r)
-        dataStruct.wirex.push_back(w[0])
-        dataStruct.wirey.push_back(w[1])
-        dataStruct.wirez.push_back(w[2])
-        dataStruct.gridid.push_back(counter)
-        side = mi[0] # wire side
-        row = mi[1] # wire column
-        col = mi[2] # wire layer
-        dataStruct.gridlayer.push_back(row)
-        dataStruct.gridcolumn.push_back(col)
-        dataStruct.gridside.push_back(side)
-        counter += 1 # count up all hits for entire event
-    
-
-    tree.Fill() # data structure fully filled, lines done
+    if write:
+        for w,r,mi in zip(ncells, nradii, ninfo):
+            if type == 1 and abs(w[1]) > abs(calo_hit_point.y): 
+                continue # dismiss geiger hits outside xwall
+            if type == 2 and abs(w[2]) > abs(calo_hit_point.z): 
+                continue # dismiss geiger hits outside gveto
+            dataStruct.radius.push_back(r)
+            dataStruct.wirex.push_back(w[0])
+            dataStruct.wirey.push_back(w[1])
+            dataStruct.wirez.push_back(w[2])
+            dataStruct.gridid.push_back(counter)
+            side = mi[0] # wire side
+            row = mi[1] # wire column
+            col = mi[2] # wire layer
+            dataStruct.gridlayer.push_back(row)
+            dataStruct.gridcolumn.push_back(col)
+            dataStruct.gridside.push_back(side)
+            counter += 1 # count up all hits for entire event
+            
+            
+        tree.Fill() # data structure fully filled, lines done
+    else:
+        nonhit += 1
+print 'made %d events with %d non hit events'%(Nsims-nonhit,nonhit)
     
 tree.Write() # write all lines to disk
 file.Close()
