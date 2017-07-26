@@ -50,8 +50,7 @@ as required for reconstruction modules. The application needs to be built
 with cmake using the Bayeux and Falaise libraries, similar to building
 FLSimulate. Once built, try ./build/fltranslate --help to see the minimal
 command line options. The resulting BRIO files should then be able to serve as 
-input files for reconstruction modules. This currently hasn't been tested but
-the translation itself appears to work.
+input files for reconstruction modules.
 
 
 Installed geometry event types
