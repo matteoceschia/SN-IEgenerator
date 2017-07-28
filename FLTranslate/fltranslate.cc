@@ -352,6 +352,7 @@ falaise::exit_code do_fltranslate(int argc, char* argv[]) {
         wx = wirex->at(counter);
         wy = wirey->at(counter);
         wz = wirez->at(counter);
+	if (rad<rad_err) rad = rad_err;
         the_calibrated_tracker_hit.set_r(rad);
         the_calibrated_tracker_hit.set_sigma_r(rad_err);
         the_calibrated_tracker_hit.set_z(wz);
