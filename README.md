@@ -203,3 +203,30 @@ required data, hit id's and geometry id's.
 The consistency with flvisualize has been tested and is advised to
 be used for clarity on the toy data, what it is and how it looks like.
 
+
+Working procedure:
+------------------
+In the utility folder a reconstruction configuration file is included:
+
+helixrecon.conf
+
+which was used to run the (almost) official reconstruction over the
+toy data consisting of helices (assuming the fltranslate application 
+produced a file single_helix.brio from the corresponding .tsim
+file after running: python toysinglehelix_calo.py):
+
+flreconstruct -i single_helix.brio -p helixrecon.conf -o ptdfiles/sh_ptd.brio
+
+Almost, results from the required modifications: no mock calibration since the 
+data already arrives in the CD data bank.
+
+I also forced the 25 Gauss B-field but as commented in the config file, 
+this does not appear to have any effect anyway. I also set the minimum 
+radius to a value smaller than the minimum value hard-coded in the 
+fltranslate application as the radius error at 0.9 mm which can of 
+course be adapted to anything you like, these are toy events after all.
+
+The reconstructed files can then be viewed with flvisualize or translated 
+to root files for inspection on how well the reconstruction did on these 
+simple events.
+
