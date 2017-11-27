@@ -162,6 +162,7 @@ for i in range(Nsims):
         dataStruct.charge.push_back(0)
 
         ci, point = cluster2[k]
+        calo_hit_point = point[0]
         type = ci[0][1]
         for w,r,mi in zip(cells,radii,info):
             if type == 1 and abs(w[1]) > abs(calo_hit_point.y): 

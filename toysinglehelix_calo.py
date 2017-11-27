@@ -244,9 +244,9 @@ for i in range(Nsims):
             dataStruct.diry.push_back(mom[1])
             dataStruct.dirz.push_back(mom[2])
             dataStruct.charge.push_back(charge)
-            dataStruct.pointx.push_back(calo_hit_point[0]) # hit point on calo
-            dataStruct.pointy.push_back(calo_hit_point[1])
-            dataStruct.pointz.push_back(calo_hit_point[2])
+            dataStruct.pointx.push_back(calo_hit_point.x) # hit point on calo
+            dataStruct.pointy.push_back(calo_hit_point.y)
+            dataStruct.pointz.push_back(calo_hit_point.z)
             
     counter = 0
     if write:

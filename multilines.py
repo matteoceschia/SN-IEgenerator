@@ -223,8 +223,16 @@ class track_generator(object):
             nlines = 1 # minimum 1 line
         
         for i in range(nlines):
-            intercept = random.uniform(-2464.0,2464.0) # limit from demonstrator y-axis
-            self.lines.append(self.single_line_random_slope(intercept))
+            # random line xy slope for the straight line
+            angle = random.uniform(-pi*0.5+0.1, pi*0.5-0.1) # taking vertical out
+            sl = tan(angle)
+            # random line xz slope for the straight line
+            angle2 = random.uniform(-pi*0.5+0.1, pi*0.5-0.1) # taking vertical out
+            slxz = tan(angle2)
+            intercepty = random.uniform(-2000.0,2000.0) # limit from demonstrator y-axis
+            interceptz = random.uniform(-1300.0,1300.0) # limit from demonstrator z-axis
+
+            self.lines.append(self.single_line_manual_with_z(sl, slxz, intercepty, interceptz))
 
 
 

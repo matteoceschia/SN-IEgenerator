@@ -1,3 +1,5 @@
+import math
+import random
 import ROOT as root
 import multilines as ML
 from utility import geometrycheck as gcheck
@@ -31,10 +33,11 @@ root.gROOT.ProcessLine(
    vector<int>*    calo_row;\
 };");
 
-Nsims = 1000 # Number of simulated lines
+Nsims = 30 # Number of simulated lines
+Nlines = 2
 
 # Set up ROOT data structures for file output and storage
-file = root.TFile("/tmp/leftright_calo.tsim","recreate")
+file = root.TFile("/tmp/haystack.tsim","recreate")
 tree = root.TTree("hit_tree","Hit data")
 tree.SetDirectory(file)
 
@@ -96,28 +99,26 @@ tgen = ML.track_generator()
 dcalo = gcheck.demonstratorcalo()
 
 for i in range(Nsims):
-    tgen.double_random_atvertex() # vertex on foil at x=0, y=0, z=0
-    both = tgen.getLines()
+    tgen.haystack(Nlines)
+    all = tgen.getLines()
     lines = []
-
-    # enable one line on the left
-    lines.append((both[0],0))
-
-    # second line on the right
-    lines.append((both[1],1))
+    for entry in all:
+        lrtracker = random.randint(0,1) # pick left or right
+        lines.append((entry, lrtracker))
 
     # all hits related truth data in cluster
     cluster = wgr.multi_track_hits(lines)
     cluster2= dcalo.multi_calohits(lines)
-    while len(cluster2) < 1: # no calo was hit, try again
-        tgen.double_random_atvertex() # vertex on foil at x=0,y=0,z=0
-        both = tgen.getLines()
+
+    while len(cluster2) < Nlines: # too few calo hits, try again
+        tgen.haystack(Nlines)
+        all = tgen.getLines()
         lines = []
-        lines.append((both[0],0))
-        lines.append((both[1],1))
+        for entry in all:
+            lrtracker = random.randint(0,1) # pick left or right
+            lines.append((entry, lrtracker))
         cluster = wgr.multi_track_hits(lines)
         cluster2= dcalo.multi_calohits(lines)
-
 
     file.cd()
     # Prepare data structure for this line
@@ -146,20 +147,17 @@ for i in range(Nsims):
     dataStruct.calowall.clear()
     dataStruct.calorow.clear() 
     dataStruct.calocolumn.clear()
-
+    
     counter = 0
     for k,val in cluster.iteritems():
         line = lines[k-1][0]  # line3 object
         cells = val[0] # first list in cluster tuple 
         radii = val[1] # as list
         info = val[2]  # as list
-        
+
         dataStruct.dirx.push_back(line.v.x)
         dataStruct.diry.push_back(line.v.y)
         dataStruct.dirz.push_back(line.v.z)
-        #dataStruct.pointx.push_back(line.p.x)
-        #dataStruct.pointy.push_back(line.p.y)
-        #dataStruct.pointz.push_back(line.p.z)
         dataStruct.charge.push_back(0)
 
         ci, point = cluster2[k]
@@ -198,9 +196,10 @@ for i in range(Nsims):
         dataStruct.pointx.push_back(point[0].x)
         dataStruct.pointy.push_back(point[0].y)
         dataStruct.pointz.push_back(point[0].z)
-        
 
-    tree.Fill() # data structure fully filled, lines done
+        
+        
+    tree.Fill() # data structure fully filled, line done
     
 tree.Write() # write all lines to disk
 file.Close()
