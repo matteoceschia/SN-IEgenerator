@@ -66,6 +66,10 @@ Installed geometry event types
 - Single Scatter: single line in random tracker half with a small random location 
   break along it, mimicking multiple scattering in gas with small (3 degr std.dev.) angle 
   scattering at the break.
+- Haystack: N line generator where the number of lines is in the code, currently set at 2. 
+  The main difference here is that the vertex for each line is random as are all slopes.
+  Changing the number of events and the number of lines to generate could mimick any
+  general, random N tracker line event.
 
 More types can be constructed from the examples above and inspecting the geometric object
 creation functions in the multiline.py script.
