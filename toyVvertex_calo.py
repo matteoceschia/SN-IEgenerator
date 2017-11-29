@@ -97,7 +97,8 @@ tgen = ML.track_generator()
 dcalo = gcheck.demonstratorcalo()
 
 for i in range(Nsims):
-    tgen.double_random_atvertex() # vertex on foil at x=0,y=0
+    intercepty = random.uniform(-2000.0,2000.0) # limit from demonstrator y-axis
+    tgen.double_random_atvertex(intercepty) # vertex on foil at x=0
     both = tgen.getLines()
     lrtracker = random.randint(0,1) # pick left or right
     lines = []
@@ -110,7 +111,7 @@ for i in range(Nsims):
     cluster = wgr.multi_track_hits(lines)
     cluster2= dcalo.multi_calohits(lines)
     while len(cluster2) < 1: # no calo was hit, try again
-        tgen.double_random_atvertex() # vertex on foil at x=0,y=0
+        tgen.double_random_atvertex(intercepty) # vertex on foil at x=0
         both = tgen.getLines()
         lines = []
         lines.append((both[0], lrtracker))

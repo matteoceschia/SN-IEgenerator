@@ -35,7 +35,7 @@ root.gROOT.ProcessLine(
 Nsims = 1000 # Number of simulated lines
 
 # Set up ROOT data structures for file output and storage
-file = root.TFile("/tmp/leftright_calo.tsim","recreate")
+file = root.TFile("/tmp/lr_withbounce.tsim","recreate")
 tree = root.TTree("hit_tree","Hit data")
 tree.SetDirectory(file)
 
@@ -97,18 +97,27 @@ tgen = ML.track_generator()
 dcalo = gcheck.demonstratorcalo()
 
 for i in range(Nsims):
+    lrtracker = random.randint(0,1) # pick left or right
     intercepty = random.uniform(-2000.0,2000.0) # limit from demonstrator y-axis
-    tgen.double_random_atvertex(intercepty) # vertex on foil at x=0
-    both = tgen.getLines()
-    lines = []
+    dummycluster = { }
+    while len(dummycluster) < 1:
+        tgen.double_random_atvertex(intercepty) # vertex on foil at x=0
+        both = tgen.getLines()
+        lines = []
 
-    # enable one line on the left
-    lines.append((both[0],0))
+        # enable one line on the left
+        lines.append((both[0],0))
 
-    # second line on the right
-    lines.append((both[1],1))
+        # second line on the right
+        lines.append((both[1],1))
 
-    # all hits related truth data in cluster
+        # all hits related truth data in cluster
+        dummycluster = dcalo.multi_calohits(lines)
+
+    ci, point = dummycluster[dummycluster.keys()[lrtracker]] # pick side
+    calo_hit_point = point[0]
+
+    lines.append((tgen.single_line_random_atplane(calo_hit_point.x, calo_hit_point.y), lrtracker))
     cluster = wgr.multi_track_hits(lines)
     cluster2= dcalo.multi_calohits(lines)
     while len(cluster2) < 1: # no calo was hit, try again
@@ -117,10 +126,13 @@ for i in range(Nsims):
         lines = []
         lines.append((both[0],0))
         lines.append((both[1],1))
+        dummycluster = dcalo.multi_calohits(lines)
+        ci, point = dummycluster[dummycluster.keys()[lrtracker]] # pick side
+        calo_hit_point = point[0]
+        lines.append((tgen.single_line_random_atplane(calo_hit_point.x, calo_hit_point.y), lrtracker))
         cluster = wgr.multi_track_hits(lines)
         cluster2= dcalo.multi_calohits(lines)
-
-
+        
     file.cd()
     # Prepare data structure for this line
     dataStruct.dirx.clear()

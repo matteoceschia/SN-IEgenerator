@@ -98,6 +98,7 @@ tgen = ML.track_generator()
 dcalo = gcheck.demonstratorcalo()
 
 for i in range(Nsims):
+    intercepty = random.uniform(-2000.0,2000.0) # limit from demonstrator y-axis
     # random line xy slope for the straight line
     angle = random.uniform(-math.pi*0.5+0.1, math.pi*0.5-0.1) # taking vertical out
     sl = math.tan(angle)
@@ -105,7 +106,7 @@ for i in range(Nsims):
     angle2 = random.uniform(-math.pi*0.5+0.1, math.pi*0.5-0.1) # taking vertical out
     slxz = math.tan(angle2)
 
-    dummy = tgen.single_line_manual_with_z(sl, slxz, 0.0, 0.0) # vertex on foil at x=0,y=0,z=0
+    dummy = tgen.single_line_manual_with_z(sl, slxz, intercepty, 0.0) # vertex on foil at x=0
     lrtracker = random.randint(0,1) # pick left or right
 
     cells, radii = wgr.hits(dummy, lrtracker) # left/right tracker half
@@ -116,7 +117,7 @@ for i in range(Nsims):
         sl = math.tan(angle)
         angle2 = random.uniform(-math.pi*0.5+0.1, math.pi*0.5-0.1) # taking vertical out
         slxz = math.tan(angle2)
-        dummy = tgen.single_line_manual_with_z(sl, slxz, 0.0, 0.0) # vertex on foil at x=0,y=0
+        dummy = tgen.single_line_manual_with_z(sl, slxz, intercepty, 0.0) # vertex on foil at x=0
         lrtracker = random.randint(0,1) # pick left or right
         
         cells, radii = wgr.hits(dummy, lrtracker) # left/right tracker half

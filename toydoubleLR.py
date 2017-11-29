@@ -35,7 +35,7 @@ root.gROOT.ProcessLine(
 Nsims = 1000 # Number of simulated lines
 
 # Set up ROOT data structures for file output and storage
-file = root.TFile("/tmp/leftright_calo.tsim","recreate")
+file = root.TFile("/tmp/doublelr_calo.tsim","recreate")
 tree = root.TTree("hit_tree","Hit data")
 tree.SetDirectory(file)
 
@@ -108,13 +108,24 @@ for i in range(Nsims):
     # second line on the right
     lines.append((both[1],1))
 
+    intercepty = random.uniform(-2000.0,2000.0) # limit from demonstrator y-axis
+    tgen.double_random_atvertex(intercepty) # vertex on foil at x=0
+    both = tgen.getLines()
+    lines.append((both[0],0))
+    lines.append((both[1],1))
+
     # all hits related truth data in cluster
     cluster = wgr.multi_track_hits(lines)
     cluster2= dcalo.multi_calohits(lines)
     while len(cluster2) < 1: # no calo was hit, try again
+        lines = []
         tgen.double_random_atvertex(intercepty) # vertex on foil at x=0
         both = tgen.getLines()
-        lines = []
+        lines.append((both[0],0))
+        lines.append((both[1],1))
+        intercepty = random.uniform(-2000.0,2000.0) # limit from demonstrator y-axis
+        tgen.double_random_atvertex(intercepty) # vertex on foil at x=0
+        both = tgen.getLines()
         lines.append((both[0],0))
         lines.append((both[1],1))
         cluster = wgr.multi_track_hits(lines)

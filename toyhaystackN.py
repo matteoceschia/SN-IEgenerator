@@ -33,7 +33,7 @@ root.gROOT.ProcessLine(
    vector<int>*    calo_row;\
 };");
 
-Nsims = 30 # Number of simulated lines
+Nsims = 1000 # Number of simulated lines
 Nlines = 2
 
 # Set up ROOT data structures for file output and storage

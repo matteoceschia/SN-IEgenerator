@@ -1,5 +1,5 @@
-import ROOT as root
 import random
+import ROOT as root
 import multilines as ML
 from utility import geometrycheck as gcheck
 
@@ -35,7 +35,7 @@ root.gROOT.ProcessLine(
 Nsims = 1000 # Number of simulated lines
 
 # Set up ROOT data structures for file output and storage
-file = root.TFile("/tmp/leftright_calo.tsim","recreate")
+file = root.TFile("/tmp/doubleVvar_calo.tsim","recreate")
 tree = root.TTree("hit_tree","Hit data")
 tree.SetDirectory(file)
 
@@ -102,11 +102,15 @@ for i in range(Nsims):
     both = tgen.getLines()
     lines = []
 
-    # enable one line on the left
-    lines.append((both[0],0))
-
-    # second line on the right
-    lines.append((both[1],1))
+    # enable both lines on the same side
+    lines.append((both[0], 0))
+    lines.append((both[1], 0))
+    intercepty = random.uniform(-2000.0,2000.0) # limit from demonstrator y-axis
+    tgen.double_random_atvertex(intercepty) # vertex on foil at x=0
+    both = tgen.getLines()
+    # again both lines on the same side
+    lines.append((both[0], 1))
+    lines.append((both[1], 1))
 
     # all hits related truth data in cluster
     cluster = wgr.multi_track_hits(lines)
@@ -115,11 +119,15 @@ for i in range(Nsims):
         tgen.double_random_atvertex(intercepty) # vertex on foil at x=0
         both = tgen.getLines()
         lines = []
-        lines.append((both[0],0))
-        lines.append((both[1],1))
+        lines.append((both[0], 0))
+        lines.append((both[1], 0))
+        intercepty = random.uniform(-2000.0,2000.0) # limit from demonstrator y-axis
+        tgen.double_random_atvertex(intercepty) # vertex on foil at x=0
+        both = tgen.getLines()
+        lines.append((both[0], 1))
+        lines.append((both[1], 1))
         cluster = wgr.multi_track_hits(lines)
         cluster2= dcalo.multi_calohits(lines)
-
 
     file.cd()
     # Prepare data structure for this line
