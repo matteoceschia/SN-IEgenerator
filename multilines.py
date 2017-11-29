@@ -211,10 +211,14 @@ class track_generator(object):
         
 
     def double_random_atvertex(self, intercept = 0.0):
-        self.lines = [] # clear
         # v-shape double line from vertex
-        self.lines.append(self.single_line_random_slope(intercept))
-        self.lines.append(self.single_line_random_slope(intercept))
+        angle = random.uniform(-pi*0.5+0.17, pi*0.5-0.17) # taking vertical out
+        sl1 = tan(angle)
+        sl2 = tan(angle)
+        while abs(sl1 - sl2) < 0.2: # create different slopes for both
+            angle = random.uniform(-pi*0.5+0.17, pi*0.5-0.17) # taking vertical out
+            sl2 = tan(angle)
+        self.double_manual_atvertex(sl1, sl2, intercept)
         
 
     def haystack(self, nlines=2):
