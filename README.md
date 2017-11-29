@@ -70,6 +70,12 @@ Installed geometry event types
   The main difference here is that the vertex for each line is random as are all slopes.
   Changing the number of events and the number of lines to generate could mimick any
   general, random N tracker line event.
+- With Bounce: uses the two-cluster generators and adds a third line with a point
+  at the calorimeter hit point such that it looks like a track bounces off the 
+  calorimeter.
+- Double: these are generators for four cluster events, variations of the two-cluster
+  generators.
+
 
 More types can be constructed from the examples above and inspecting the geometric object
 creation functions in the multiline.py script.
