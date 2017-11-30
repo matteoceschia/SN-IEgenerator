@@ -2,6 +2,7 @@ import ROOT as root
 import random
 import multilines as ML
 from utility import geometrycheck as gcheck
+from math import pi, tan
 
 root.gROOT.ProcessLine(
 "struct DataStruct{\
@@ -32,7 +33,7 @@ root.gROOT.ProcessLine(
    vector<int>*    calo_row;\
 };");
 
-Nsims = 1000 # Number of simulated lines
+Nsims = 10000 # Number of simulated lines
 
 # Set up ROOT data structures for file output and storage
 file = root.TFile("/tmp/lr_withbounce.tsim","recreate")
@@ -101,7 +102,7 @@ for i in range(Nsims):
     intercepty = random.uniform(-2000.0,2000.0) # limit from demonstrator y-axis
     dummycluster = { }
     while len(dummycluster) < 1:
-        tgen.double_random_atvertex(intercepty) # vertex on foil at x=0
+        tgen.double_random_atvertex(intercepty) # vertex on foil at x=0, y=0, z=0
         both = tgen.getLines()
         lines = []
 
@@ -116,12 +117,19 @@ for i in range(Nsims):
 
     ci, point = dummycluster[dummycluster.keys()[lrtracker]] # pick side
     calo_hit_point = point[0]
+    chosenLine = both[lrtracker]
+    slope = chosenLine.v.y / chosenLine.v.x
+    angle = random.uniform(-pi*0.5+0.17, pi*0.5-0.17) # taking vertical out
+    sl = tan(angle)
+    while abs(sl-slope) < 0.4: # safe against overlap lines
+        angle = random.uniform(-pi*0.5+0.17, pi*0.5-0.17) # taking vertical out
+        sl = tan(angle)
 
-    lines.append((tgen.single_line_random_atplane(calo_hit_point.x, calo_hit_point.y), lrtracker))
+    lines.append((tgen.single_line_manual_atplane(sl, calo_hit_point.x, calo_hit_point.y), lrtracker))
     cluster = wgr.multi_track_hits(lines)
     cluster2= dcalo.multi_calohits(lines)
     while len(cluster2) < 1: # no calo was hit, try again
-        tgen.double_random_atvertex(intercepty) # vertex on foil at x=0
+        tgen.double_random_atvertex(intercepty) # vertex on foil at x=0,y=0,z=0
         both = tgen.getLines()
         lines = []
         lines.append((both[0],0))
@@ -129,7 +137,14 @@ for i in range(Nsims):
         dummycluster = dcalo.multi_calohits(lines)
         ci, point = dummycluster[dummycluster.keys()[lrtracker]] # pick side
         calo_hit_point = point[0]
-        lines.append((tgen.single_line_random_atplane(calo_hit_point.x, calo_hit_point.y), lrtracker))
+        chosenLine = both[lrtracker]
+        slope = chosenLine.v.y / chosenLine.v.x
+        angle = random.uniform(-pi*0.5+0.17, pi*0.5-0.17) # taking vertical out
+        sl = tan(angle)
+        while abs(sl-slope) < 0.4: # safe against overlap lines
+            angle = random.uniform(-pi*0.5+0.17, pi*0.5-0.17) # taking vertical out
+            sl = tan(angle)
+        lines.append((tgen.single_line_manual_atplane(sl, calo_hit_point.x, calo_hit_point.y), lrtracker))
         cluster = wgr.multi_track_hits(lines)
         cluster2= dcalo.multi_calohits(lines)
         
