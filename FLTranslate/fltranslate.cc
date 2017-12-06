@@ -46,7 +46,7 @@ void showHelp() {
   std::cout << "\t -i , --inputHitsFile <FULL PATH ROOT FILENAME>" << std::endl;
   std::cout << "\t -s , --start <First events>" << std::endl;
   std::cout << "\t -e , --end <Final events>" << std::endl;
-  std::cout << "\t -o , --outputFile <FULL PATH ROOT FILENAME>" << std::endl;
+  std::cout << "\t -o , --outputFile <FULL PATH BRIO FILENAME>" << std::endl;
 }
 
 typedef struct {

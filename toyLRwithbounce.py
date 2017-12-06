@@ -33,7 +33,7 @@ root.gROOT.ProcessLine(
    vector<int>*    calo_row;\
 };");
 
-Nsims = 10000 # Number of simulated lines
+Nsims = 1000 # Number of simulated lines
 
 # Set up ROOT data structures for file output and storage
 file = root.TFile("/tmp/lr_withbounce.tsim","recreate")
@@ -118,10 +118,15 @@ for i in range(Nsims):
     ci, point = dummycluster[dummycluster.keys()[lrtracker]] # pick side
     calo_hit_point = point[0]
     chosenLine = both[lrtracker]
+    if abs(calo_hit_point.y) - 2200 > 0: # too far out the side
+        lrtracker = int(not lrtracker)
+        ci, point = dummycluster[dummycluster.keys()[lrtracker]] # pick other side
+        calo_hit_point = point[0]
+        chosenLine = both[lrtracker]
     slope = chosenLine.v.y / chosenLine.v.x
     angle = random.uniform(-pi*0.5+0.17, pi*0.5-0.17) # taking vertical out
     sl = tan(angle)
-    while abs(sl-slope) < 0.4: # safe against overlap lines
+    while abs(sl-slope) < 0.5: # safe against overlap lines
         angle = random.uniform(-pi*0.5+0.17, pi*0.5-0.17) # taking vertical out
         sl = tan(angle)
 
@@ -138,10 +143,15 @@ for i in range(Nsims):
         ci, point = dummycluster[dummycluster.keys()[lrtracker]] # pick side
         calo_hit_point = point[0]
         chosenLine = both[lrtracker]
+        if abs(calo_hit_point.y) - 2200 > 0: # too far out the side
+            lrtracker = int(not lrtracker)
+            ci, point = dummycluster[dummycluster.keys()[lrtracker]] # pick other side
+            calo_hit_point = point[0]
+            chosenLine = both[lrtracker]
         slope = chosenLine.v.y / chosenLine.v.x
         angle = random.uniform(-pi*0.5+0.17, pi*0.5-0.17) # taking vertical out
         sl = tan(angle)
-        while abs(sl-slope) < 0.4: # safe against overlap lines
+        while abs(sl-slope) < 0.5: # safe against overlap lines
             angle = random.uniform(-pi*0.5+0.17, pi*0.5-0.17) # taking vertical out
             sl = tan(angle)
         lines.append((tgen.single_line_manual_atplane(sl, calo_hit_point.x, calo_hit_point.y), lrtracker))
