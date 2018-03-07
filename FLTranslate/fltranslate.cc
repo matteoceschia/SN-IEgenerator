@@ -358,6 +358,7 @@ falaise::exit_code do_fltranslate(int argc, char* argv[]) {
         the_calibrated_tracker_hit.set_z(wz);
         the_calibrated_tracker_hit.set_sigma_z(z_err);
         the_calibrated_tracker_hit.set_xy(wx, wy);
+	the_calibrated_tracker_hit.set_delayed(false);
         counter++;
 
         // save the calibrate tracker hit:
