@@ -38,7 +38,7 @@
 #include "falaise/falaise.h"
 #include "falaise/resource.h"
 #include "falaise/snemo/datamodels/data_model.h"
-#include "falaise/snemo/processing/services.h"
+#include "falaise/snemo/services/services.h"
 #include "falaise/version.h"
 
 void showHelp() {
@@ -283,8 +283,8 @@ falaise::exit_code do_fltranslate(int argc, char* argv[]) {
         "description",
         "SuperNEMO Demonstrator Service manager for translation");
     std::vector<std::string> scf = {
-        "@falaise:config/snemo/demonstrator/geometry/4.0/"
-        "geometry_service.conf"};
+        "@falaise:snemo/demonstrator/geometry/"
+        "GeometryService.conf"};
     services_config.store("services.configuration_files", scf);
     services.initialize(services_config);
 

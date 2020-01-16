@@ -31,13 +31,17 @@ root.gROOT.ProcessLine(
    vector<int>*    calo_wall;\
    vector<int>*    calo_column;\
    vector<int>*    calo_row;\
+   int*            true_nclus;\
+   vector<int>*    true_labels;\
 };");
+#vector<int>*    true_nclus;\
 
-Nsims = 1000 # Number of simulated lines
-Nlines = 2
+Nsims = 10000 # Number of simulated lines
+Nlines = 3
 
 # Set up ROOT data structures for file output and storage
-file = root.TFile("/tmp/haystack.tsim","recreate")
+file = root.TFile("/Users/matteoceschia/haystack3_10000.root","recreate")
+#file = root.TFile("/Users/matteoceschia/Yorck/SN-IEgenerator/ToyData/3T/haystack.tsim","recreate")
 tree = root.TTree("hit_tree","Hit data")
 tree.SetDirectory(file)
 
@@ -67,6 +71,8 @@ dataStruct.calowall = root.std.vector('int')()
 dataStruct.caloside = root.std.vector('int')()
 dataStruct.calorow = root.std.vector('int')()
 dataStruct.calocolumn = root.std.vector('int')()
+dataStruct.truenclus = root.std.vector('int')()
+dataStruct.truelabels = root.std.vector('int')()
 
 tree.Branch('dirx', dataStruct.dirx)
 tree.Branch('diry', dataStruct.diry)
@@ -93,6 +99,8 @@ tree.Branch('calo_side', dataStruct.caloside)
 tree.Branch('calo_wall', dataStruct.calowall)
 tree.Branch('calo_row', dataStruct.calorow)
 tree.Branch('calo_column', dataStruct.calocolumn)
+tree.Branch('true_nclus', dataStruct.truenclus)
+tree.Branch('true_labels', dataStruct.truelabels)
 
 wgr = ML.demonstratorgrid()
 tgen = ML.track_generator()
@@ -137,7 +145,7 @@ for i in range(Nsims):
     dataStruct.wirez.clear()
     dataStruct.gridid.clear()
     dataStruct.gridside.clear()
-    dataStruct.gridlayer.clear() 
+    dataStruct.gridlayer.clear()
     dataStruct.gridcolumn.clear()
     dataStruct.breaklayer.clear()
     dataStruct.charge.clear()
@@ -145,16 +153,20 @@ for i in range(Nsims):
     dataStruct.calotype.clear()
     dataStruct.caloside.clear()
     dataStruct.calowall.clear()
-    dataStruct.calorow.clear() 
+    dataStruct.calorow.clear()
     dataStruct.calocolumn.clear()
-    
+    dataStruct.truenclus.clear()
+    dataStruct.truelabels.clear()
+
+    dataStruct.truenclus.push_back(Nlines)
+    # dataStruct.truenclus = Nlines
+
     counter = 0
-    for k,val in cluster.iteritems():
+    for k,val in cluster.items():
         line = lines[k-1][0]  # line3 object
-        cells = val[0] # first list in cluster tuple 
+        cells = val[0] # first list in cluster tuple
         radii = val[1] # as list
         info = val[2]  # as list
-
         dataStruct.dirx.push_back(line.v.x)
         dataStruct.diry.push_back(line.v.y)
         dataStruct.dirz.push_back(line.v.z)
@@ -164,10 +176,11 @@ for i in range(Nsims):
         calo_hit_point = point[0]
         type = ci[0][1]
         for w,r,mi in zip(cells,radii,info):
-            if type == 1 and abs(w[1]) > abs(calo_hit_point.y): 
+            if type == 1 and abs(w[1]) > abs(calo_hit_point.y):
                 continue # dismiss geiger hits outside xwall
-            if type == 2 and abs(w[2]) > abs(calo_hit_point.z): 
+            if type == 2 and abs(w[2]) > abs(calo_hit_point.z):
                 continue # dismiss geiger hits outside gveto
+            dataStruct.truelabels.push_back(k)
             dataStruct.radius.push_back(r)
             dataStruct.wirex.push_back(w[0])
             dataStruct.wirey.push_back(w[1])
@@ -176,11 +189,11 @@ for i in range(Nsims):
             gside = mi[0] # wire side
             grow = mi[1] # wire column
             gcol = mi[2] # wire layer
-            dataStruct.gridlayer.push_back(grow)
-            dataStruct.gridcolumn.push_back(gcol)
-            dataStruct.gridside.push_back(gside) # not covered yet 
+            dataStruct.gridlayer.push_back(grow.item())
+            dataStruct.gridcolumn.push_back(gcol.item())
+            dataStruct.gridside.push_back(gside) # not covered yet
             counter += 1 # count up all hits for entire event
-    for k,val in cluster2.iteritems():
+    for k,val in cluster2.items():
         ci, point = val
         type = ci[0][1]
         side = ci[0][3]
@@ -197,9 +210,9 @@ for i in range(Nsims):
         dataStruct.pointy.push_back(point[0].y)
         dataStruct.pointz.push_back(point[0].z)
 
-        
-        
+
+
     tree.Fill() # data structure fully filled, line done
-    
+
 tree.Write() # write all lines to disk
 file.Close()

@@ -185,7 +185,7 @@ for i in range(Nsims):
         cluster2= dcalo.multi_calohits(lines)
 
     # clean tracker traces
-    for k,item in cluster.iteritems():
+    for k,item in cluster.items():
         c, r, info = item
         # print 'cells before cleaning, key,cells',k,c
         ncells, nradii, ninfo = cleanpicture(c, r, info, yinterc) # remove returning helix branch
@@ -224,7 +224,7 @@ for i in range(Nsims):
 
     # clean multiple calo hits
     write = True
-    for k, caloinfo in cluster2.iteritems():
+    for k, caloinfo in cluster2.items():
         (cilist,pointlist) = caloinfo
         ci = cilist[0]
         point = pointlist[0]
@@ -260,7 +260,7 @@ for i in range(Nsims):
             dataStruct.calowall.push_back(wall)
     counter = 0
     if write:
-        for k,val in cluster.iteritems():
+        for k,val in cluster.items():
             struc = both[k-1]  # helix object
             cells = val[0] # first list in cluster tuple 
             radii = val[1] # as list
@@ -282,8 +282,8 @@ for i in range(Nsims):
                 gside = mi[0] # wire side
                 grow = mi[1] # wire column
                 gcol = mi[2] # wire layer
-                dataStruct.gridlayer.push_back(grow)
-                dataStruct.gridcolumn.push_back(gcol)
+                dataStruct.gridlayer.push_back(grow.item())
+                dataStruct.gridcolumn.push_back(gcol.item())
                 dataStruct.gridside.push_back(gside) # not covered yet 
                 counter += 1 # count up all hits for entire event
 
@@ -291,6 +291,6 @@ for i in range(Nsims):
         tree.Fill() # data structure fully filled, lines done
     else:
         nonhit += 1
-print 'made %d events with %d non hit events'%(Nsims-nonhit,nonhit)
+print('made %d events with %d non hit events'%(Nsims-nonhit,nonhit))
 tree.Write() # write all lines to disk
 file.Close()

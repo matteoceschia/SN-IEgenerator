@@ -80,7 +80,7 @@ class demonstratorgrid(object):
                     darr[m][n] = distance[0]*1.0e3 # [mm] shortest distance helix to wire point in 2D
 
                 else:
-                    print 'grid ERROR: input type unknown, not line nor helix'
+                    print('grid ERROR: input type unknown, not line nor helix')
                     return [], []
             m += 1
                 

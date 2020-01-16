@@ -28,7 +28,7 @@ class helix(object):
         Distance to Point function below.
         '''
         if self.Bfield==0.0:
-            print "No B-field - no helix"
+            print("No B-field - no helix")
             return 0
         kappa = self.unit_constant
         half_pi = pi/2.0
@@ -229,7 +229,7 @@ class Par5Helix(object):
         self.par = par # for printing
 
         if omega==0:
-            print "No curvature omega, no helix"
+            print("No curvature omega, no helix")
             return None
 
         charge = omega/abs(omega)

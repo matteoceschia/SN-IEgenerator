@@ -13,7 +13,7 @@ find_package(Falaise REQUIRED)
 find_package(ROOT REQUIRED TreePlayer)
 
 # Build an executable from our sources
-add_executable(fltranslate.exe
+add_executable(fltranslate
   fltranslate.cc
   FLSimulateCommandLine.h
   FLSimulateErrors.h
@@ -25,7 +25,7 @@ add_executable(fltranslate.exe
 # Link it to the FalaiseModule library
 # This ensures the correct compiler flags, include paths
 # and linker flags are applied to our dynamic library.
-target_link_libraries(fltranslate.exe PUBLIC
+target_link_libraries(fltranslate PUBLIC
   Falaise::Falaise
   Bayeux::Bayeux_mctools_geant4
   ${ROOT_TreePlayer_LIBRARY}

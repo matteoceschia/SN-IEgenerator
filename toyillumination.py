@@ -165,11 +165,12 @@ for i in range(Nsims):
 #    dataStruct.pointz.push_back(dummy.p.z)
 
     counter = 0
-    type = caloinfo[0][1]
+    type_calo = caloinfo[0][1]
+    
     for w,r,mi in zip(cells,radii,info):
-        if type == 1 and abs(w[1]) > abs(calo_hit_point.y): 
+        if type_calo == 1 and abs(w[1]) > abs(calo_hit_point.y):
             continue # dismiss geiger hits outside xwall
-        if type == 2 and abs(w[2]) > abs(calo_hit_point.z): 
+        if type_calo == 2 and abs(w[2]) > abs(calo_hit_point.z):
             continue # dismiss geiger hits outside gveto
         dataStruct.radius.push_back(r)
         dataStruct.wirex.push_back(w[0])
@@ -177,10 +178,10 @@ for i in range(Nsims):
         dataStruct.wirez.push_back(w[2])
         dataStruct.gridid.push_back(counter)
         gside = mi[0] # wire side
-        grow = mi[1] # wire column
+        grow = mi[1].item() # wire column need .item to convert to int from numpy int (python3)
         gcol = mi[2] # wire layer
         dataStruct.gridlayer.push_back(grow)
-        dataStruct.gridcolumn.push_back(gcol)
+        dataStruct.gridcolumn.push_back(gcol.item()) #need .item to convert to int from numpy int (python3)
         dataStruct.gridside.push_back(gside) # not covered yet 
         counter += 1 # count up all hits for entire event
     side = caloinfo[0][3]
@@ -190,7 +191,7 @@ for i in range(Nsims):
     dataStruct.caloid.push_back(0)
     dataStruct.calorow.push_back(row)
     dataStruct.calocolumn.push_back(col)
-    dataStruct.calotype.push_back(type)
+    dataStruct.calotype.push_back(type_calo)
     dataStruct.caloside.push_back(side)
     dataStruct.calowall.push_back(wall)
         
