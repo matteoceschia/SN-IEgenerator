@@ -1,6 +1,7 @@
 # my directories
 workdir/
 build
+ToyData/
 
 # C extensions
 *.so
